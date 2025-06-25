@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private PlayerControls controls;
 
+
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -57,9 +59,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (transform.position.y < -5f)
         {
-            
-            ReloadScene();
+
+            GameManager.Instance.ResetGame();
         }
+
     }
 
     void FixedUpdate()
@@ -106,16 +109,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            ReloadScene();
+            GameManager.Instance.ResetGame();
+        }
+
+        if (other.CompareTag("Finish"))
+        {
+            Debug.Log("You completed the Game!!");
+            GameManager.Instance.StopTimer();
         }
     }
     
-    void ReloadScene()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
-    }
-
+    
+    
 
 
 }
